@@ -30,7 +30,7 @@ export const test = () => {
         decodeEntities: false,
       });
       /** 此处的路径相对server.ts */
-      toFile('./packages/htmls/content.html', $.html())
+      toFile('./src/htmls/content.html', $.html())
       $(".detail__body .detail__title").each(function (item: any) {
         // @ts-ignore
         let text = $(this).html();
@@ -40,7 +40,7 @@ export const test = () => {
         const imgs = $(".obc-tmpl__switch-list .obc-tmpl__switch-item:first td a img").map((i: number, x: any) => $(x).attr('src')).toArray()
         // @ts-ignore
         let text = $(this).html();
-        downloadImage(imgs[item], "./packages/images", text);
+        downloadImage(imgs[item], "./src/images", text);
       });
     })
     .catch(function (err: Error) {

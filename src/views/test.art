@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>所有用户的信息</h1>
+  <table>
+    <thead>
+      <tr>
+        <td>用户编号</td>
+        <td>用户名</td>
+        <td>密码</td>
+        <td>性别</td>
+        <td>操作</td>
+      </tr>
+    </thead>
+    <tbody>
+      {{each userList as user}}
+      <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.userName}}</td>
+        <td>{{user.userPwd}}</td>
+        <!-- <td>{{user.sex}}</td> -->
+        <td>
+          {{if user.sex=='1'}} 女 {{else if user.sex=='0'}} 男 {{/if}}
+        </td>
+        <td>
+          <a href="http://localhost:3000/user/delete/{{user.id}}">删除</a>
+          <a href="http://127.0.0.1:3000/user/update/{{user.id}}">修改</a>
+        </td>
+      </tr>
+      {{/each}}
+      <tr>
+        <td colspan="5">
+          <!-- 总条目数：{{count}}|总页数：{{pageCount}}|当前页：{{pageNum}} -->
+          共{{count}}页
+          <a href="http://localhost:3000/user/query/{{pageNum-1}}/{{pageSize}}">上一页</a>
+          <a href="http://localhost:3000/user/query/{{pageNum+1}}/{{pageSize}}">下一页</a>
+          当前页/总页数:{{pageNum}}/{{pageCount}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>
