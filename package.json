@@ -2,7 +2,7 @@
   "name": "node_study_guostz",
   "version": "1.0.0",
   "description": "study node",
-  "main": "server.ts",
+  "main": "server.js",
   "types": "dist/server.d.ts",
   "files": [
     "dist",
@@ -31,10 +31,9 @@
     ],
     "delay": "1000",
     "watch": [
-      "server.ts",
-      "packages"
+      "server.js"
     ],
-    "ext": "ts,js,json"
+    "ext": "js,ts,json"
   },
   "dependencies": {
     "axios": "^0.27.2",
