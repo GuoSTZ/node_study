@@ -7,7 +7,7 @@ const app = express();
 // 用来打开默认浏览器
 const cp = require("child_process");
 
-import { test } from './packages/actions/test';
+import { test } from './src/actions/test';
 
 
 const PORT = 5400;
