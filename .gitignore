@@ -27,3 +27,5 @@ yarn-error.log*
 lerna-debug.log
 
 src/images
+
+host.ts
