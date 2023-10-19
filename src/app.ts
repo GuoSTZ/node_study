@@ -31,7 +31,7 @@ app.use((err: any, req: any, res: any, next: any) => {
   // 如果token验证不通过，那么需要用户重新登录
   if (err.name === "UnauthorizedError") {
     // res.json发送JSON格式的响应到客户端
-    res.json({ code: 302, data: {url: 'http://localhost:8080/login'}, message: '用户未登录' })
+    res.json({ code: 302, data: {url: 'http://localhost:9966/login'}, message: '用户未登录' })
   }
   // res.send发送任意类型的响应到客户端
   res.send({

@@ -26,7 +26,7 @@ router.post('/login', async (req: any, res: any, next: any) => {
   if (user) {
     user = JSON.parse(user);
     if (user?.password === obj.password) {
-      res.json({ code: 0, data: { url: 'http://localhost:8080/home', token: tokenStr }, message: '登录成功' })
+      res.json({ code: 0, data: { url: 'http://localhost:9966/home', token: tokenStr }, message: '登录成功' })
     } else {
       res.json({ code: 1, data: null, message: '用户名或密码错误' })
     }
@@ -39,7 +39,7 @@ router.post('/login', async (req: any, res: any, next: any) => {
       }
       if (result[0]?.password === obj.password) {
         redisPool.set(obj.username, JSON.stringify(result[0]), 'EX', 3600)
-        res.json({ code: 0, data: { url: 'http://localhost:8080/home', token: tokenStr }, message: '登录成功' })
+        res.json({ code: 0, data: { url: 'http://localhost:9966/home', token: tokenStr }, message: '登录成功' })
       } else {
         res.json({ code: 1, data: null, message: '用户名或密码错误' })
       }

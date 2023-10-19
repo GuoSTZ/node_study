@@ -99,5 +99,11 @@
     "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
     "outDir": "dist", // 编译后输出目录
     "declaration": true // 生成 d.ts
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "lib",
+    "es",
+    "script"
+  ]
 }
