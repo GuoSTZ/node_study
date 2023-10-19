@@ -1,6 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import { mysqlPool, redisPool } from './pool';
+import { mysqlPool, redisPool } from '../pool';
 import { SECRET_KEY } from '../constants';
 
 //创建路由对象
@@ -26,9 +26,9 @@ router.post('/login', async (req: any, res: any, next: any) => {
   if (user) {
     user = JSON.parse(user);
     if (user?.password === obj.password) {
-      res.send({ code: 0, data: tokenStr, message: 'success' })
+      res.json({ code: 0, data: { url: 'http://localhost:8080/home', token: tokenStr }, message: '登录成功' })
     } else {
-      res.send({ code: 1, data: null, message: '用户名或密码错误' })
+      res.json({ code: 1, data: null, message: '用户名或密码错误' })
     }
   } else {
     // 向数据库发送请求 set是自动和传递参数进行匹配，匹配不到的为默认值null
@@ -39,9 +39,9 @@ router.post('/login', async (req: any, res: any, next: any) => {
       }
       if (result[0]?.password === obj.password) {
         redisPool.set(obj.username, JSON.stringify(result[0]), 'EX', 3600)
-        res.send({ code: 0, data: tokenStr, message: 'success' })
+        res.json({ code: 0, data: { url: 'http://localhost:8080/home', token: tokenStr }, message: '登录成功' })
       } else {
-        res.send({ code: 1, data: null, message: '用户名或密码错误' })
+        res.json({ code: 1, data: null, message: '用户名或密码错误' })
       }
     })
   }

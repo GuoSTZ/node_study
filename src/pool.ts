@@ -4,7 +4,7 @@ import Redis from 'ioredis';
  * 涉及环境信息，host文件不做上传
  * @example { host: '127.0.0.1', password: '123456', ... }
  */
-import { mysql_host, redis_host } from '../../host';
+import { mysql_host, redis_host } from '../host';
 
 const mysqlPool = mysql.createPool({
   multipleStatements: true, // 允许一次发送多条sql命令

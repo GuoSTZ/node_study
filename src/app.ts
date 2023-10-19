@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import { expressjwt } from 'express-jwt';
 import LoginApi from './login/api';
+import HomeApi from './home/api';
 import { SECRET_KEY } from './constants';
 
 // 创建web服务器
@@ -30,7 +31,7 @@ app.use((err: any, req: any, res: any, next: any) => {
   // 如果token验证不通过，那么需要用户重新登录
   if (err.name === "UnauthorizedError") {
     // res.json发送JSON格式的响应到客户端
-    res.json({ code: 302, data: {url: 'xxx/login'}, message: '用户未登录' })
+    res.json({ code: 302, data: {url: 'http://localhost:8080/login'}, message: '用户未登录' })
   }
   // res.send发送任意类型的响应到客户端
   res.send({
@@ -42,6 +43,7 @@ app.use((err: any, req: any, res: any, next: any) => {
 // 挂载路由对象模块
 // 路由对象的导入需要在expressjwt顺序之后，才能够让jwt自行验证
 app.use('/v1/user', LoginApi);
+app.use('/v1/home', HomeApi);
 
 // 设置接口响应用户
 app.listen(3000, () => {
