@@ -100,6 +100,10 @@
     "outDir": "dist", // 编译后输出目录
     "declaration": true // 生成 d.ts
   },
+  "include": [
+    "src",
+    "host.ts"
+  ],
   "exclude": [
     "node_modules",
     "lib",
