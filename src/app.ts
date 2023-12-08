@@ -55,7 +55,13 @@ app.use(session({
 app.use(function (req, res, next) {
   // @ts-ignore
   const user = req.session.user;
-  const excludeApi = ['/v1/user/login', '/v1/user/register', '/v1/user/logout']
+  // 不需要进行登录校验的api
+  const excludeApi = [
+    '/v1/user/login', 
+    '/v1/user/register', 
+    '/v1/user/logout',
+    '/v1/user/encryptionConfig'
+  ]
   if (!user && !excludeApi.includes(req.url)) {
     return next(new SessionError('session过期啦', {
       name: 'Session Invalid'
