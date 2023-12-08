@@ -4,6 +4,7 @@ import express from 'express';
 import { expressjwt } from 'express-jwt';
 import LoginApi from './user/api';
 import HomeApi from './home/api';
+import FileApi from './file/api';
 import { SECRET_KEY } from './constants';
 import { API_PREFIX } from './utils/env';
 import SessionError from './Error/SessionError';
@@ -67,10 +68,10 @@ app.use(function (req, res, next) {
 // 路由对象的导入需要在expressjwt顺序之后，才能够让jwt自行验证
 app.use('/v1/home', HomeApi);
 app.use('/v1/user', LoginApi);
+app.use('/v1/file', FileApi);
 
 // 在所有的路由后面添加错误处理中间件，拦截所有的错误，拦截错误好几种这种复用比较防弊
 app.use((err: any, req: any, res: any, next: any) => {
-  console.log(err.name, '======');
   // 如果token验证不通过，那么需要用户重新登录
   // if (err.name === "UnauthorizedError") {
   //   return res.json({ code: 302, data: { url: `${API_PREFIX}/login` }, message: '用户未登录' });

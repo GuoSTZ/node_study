@@ -1,6 +1,4 @@
 import express from 'express';
-import { mysqlPool, redisPool } from '../pool';
-
 //创建路由对象
 const router = express.Router();
 

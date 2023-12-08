@@ -14,7 +14,7 @@ router.post('/login', async (req: any, res: any, next: any) => {
   // 获取传递过来的参数体
   const obj = req.body;
   if (!obj.username || !obj.password) {
-    res.send({ code: 1, data: null, message: '请输入用户名和·密码' })
+    res.send({ code: 1, data: null, message: '请输入用户名和密码' })
   }
   let user: any = await redisPool.get(obj.username);
   // const tokenStr = "Bearer " + jwt.sign(
@@ -27,7 +27,7 @@ router.post('/login', async (req: any, res: any, next: any) => {
     user = JSON.parse(user);
     if (user?.password === obj.password) {
       req.session.user = user;
-      res.json({ code: 0, data: { url: `${API_PREFIX}/home` }, message: '登录成功' })
+      res.json({ code: 0, data: { url: `${API_PREFIX}/app/home` }, message: '登录成功' })
     } else {
       res.json({ code: 1, data: null, message: '用户名或密码错误' })
     }
@@ -41,7 +41,7 @@ router.post('/login', async (req: any, res: any, next: any) => {
       if (result[0]?.password === obj.password) {
         redisPool.set(obj.username, JSON.stringify(result[0]), 'EX', 3600)
         req.session.user = result[0];
-        res.json({ code: 0, data: { url: `${API_PREFIX}/home` }, message: '登录成功' })
+        res.json({ code: 0, data: { url: `${API_PREFIX}/app/home` }, message: '登录成功' })
       } else {
         res.json({ code: 1, data: null, message: '用户名或密码错误' })
       }
