@@ -4,27 +4,10 @@ import forge from 'node-forge';
 import { mysqlPool, redisPool } from '../pool';
 import { API_PREFIX } from '../utils/env';
 import UserError from '../Error/UserError';
+import { publicKey, decryptPwd, hashPwd } from '../utils';
 
 //创建路由对象
 const router = express.Router();
-
-function genRSAKeyPaire() {
-  // 生成RSA密钥对
-  const keypair = forge.pki.rsa.generateKeyPair({ bits: 2048 });
-  const publicKeyPem = forge.pki.publicKeyToPem(keypair.publicKey);
-  const privateKeyPem = forge.pki.privateKeyToPem(keypair.privateKey);
-  const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
-
-  return { publicKey: publicKeyPem, privateKey };
-}
-const { publicKey, privateKey } = genRSAKeyPaire();
-
-function decryptPwd(pwd: string) {
-  // 加密密码解密
-  const encryptedBytes = forge.util.decode64(pwd);
-  const decryptedBytes = privateKey.decrypt(encryptedBytes);
-  return forge.util.decodeUtf8(decryptedBytes); 
-}
 
 /**
  * 加密相关配置
@@ -103,7 +86,7 @@ router.post('/register', (req: any, res: any, next: any) => {
       res.send({ code: 1, data: null, message: '此用户已被注册' });
     } else {
       const decryptedPassword = decryptPwd(obj.password);
-      const storePassword = await bcrypt.hash(decryptedPassword, 12);
+      const storePassword = await hashPwd(decryptedPassword);
       mysqlPool.query(`insert into user value(?, ?, ?, ?)`, [null, obj.username, storePassword, 'visitor'], (err: any, result: any) => {
         if (err) {
           return next(err)

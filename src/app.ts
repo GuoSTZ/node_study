@@ -8,6 +8,7 @@ import FileApi from './file/api';
 import { SECRET_KEY } from './constants';
 import { API_PREFIX } from './utils/env';
 import SessionError from './Error/SessionError';
+import { createDefaultUser } from './common/createDefaultUser';
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -101,3 +102,5 @@ app.use((err: any, req: any, res: any, next: any) => {
 app.listen(3000, () => {
   console.log('服务器已经启动，访问地址为http://localhost:3000')
 });
+
+createDefaultUser();

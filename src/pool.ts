@@ -1,5 +1,6 @@
 import mysql from 'mysql';
 import Redis from 'ioredis';
+
 /** 
  * 涉及环境信息，host文件不做上传
  * @example { host: '127.0.0.1', password: '123456', ... }
@@ -17,15 +18,15 @@ const redisPool = new Redis({
   ...redis_host
 });
 
-// 确保与 Redis 服务器建立连接
-// redis.connect((error, result) => {
-//   if(!error) {
-//     console.log('成功连接到 Redis');
-//   }
-// });
-
-// 关闭 Redis 连接
+// 关闭数据库连接
 process.on('SIGINT', () => {
+  mysqlPool.end((endErr) => {
+    if (endErr) {
+      console.error('Error disconnecting from MySQL:', endErr.message);
+      return;
+    }
+    console.log('已关闭 MYSQL 连接');
+  });
   redisPool.quit(() => {
     console.log('已关闭 Redis 连接');
     process.exit(0);
@@ -34,5 +35,5 @@ process.on('SIGINT', () => {
 
 export {
   mysqlPool,
-  redisPool
+  redisPool,
 }
