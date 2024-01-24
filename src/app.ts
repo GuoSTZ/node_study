@@ -5,6 +5,7 @@ import { expressjwt } from 'express-jwt';
 import LoginApi from './user/api';
 import HomeApi from './home/api';
 import FileApi from './file/api';
+import WholeApi from './whole/api';
 import { SECRET_KEY } from './constants';
 import { API_PREFIX } from './utils/env';
 import SessionError from './Error/SessionError';
@@ -61,7 +62,9 @@ app.use(function (req, res, next) {
     '/v1/user/login', 
     '/v1/user/register', 
     '/v1/user/logout',
-    '/v1/user/encryptionConfig'
+    '/v1/user/encryptionConfig',
+    '/v1/user/pinCode',
+    '/v1/system/info'
   ]
   if (!user && !excludeApi.includes(req.url)) {
     return next(new SessionError('session过期啦', {
@@ -76,6 +79,7 @@ app.use(function (req, res, next) {
 app.use('/v1/home', HomeApi);
 app.use('/v1/user', LoginApi);
 app.use('/v1/file', FileApi);
+app.use('/v1/whole', WholeApi);
 
 // 在所有的路由后面添加错误处理中间件，拦截所有的错误，拦截错误好几种这种复用比较防弊
 app.use((err: any, req: any, res: any, next: any) => {
